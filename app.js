@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const Listing = require("./models/listing.js");
 
 
-const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlus";
+const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
 
 main()
   .then(() => {
@@ -38,6 +38,7 @@ app.get("/testListing", async (req, res) => {
   await sampleListing.save();
   console.log("sample was saved");
   res.send("successful testing");
+  console.log(sampleListing);
 });
 
 app.listen(8080, () => {
