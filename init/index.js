@@ -20,7 +20,7 @@ const initDB = async () => {
   await Listing.deleteMany({});
   console.log("swapnil kadam");
   await Listing.insertMany(initData.data);
-  console.log(Listing);
+  console.log(initData.data);
 };
 
 initDB();
