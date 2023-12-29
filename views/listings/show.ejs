@@ -1,10 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Wanderlust</title>
-</head>
+<% layout("/layouts/bollerplate.ejs") %>
+
 <body>
     <h3>Listings Details : </h3>
     <ul>
@@ -14,5 +9,8 @@
         <li><%= listing.location%></li>
         <li><%= listing.country %></li>
     </ul>
+    <a href="/listings/<%= listing._id %>/edit">Edit listings</a>
+    <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE"><br>
+        <button>Delete this listings</button>
+    </form>
 </body>
-</html>

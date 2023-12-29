@@ -3,6 +3,8 @@ const app = express();
 const mongoose = require("mongoose");
 const Listing = require("./models/listing.js");
 const path = require("path");
+const methodOverride = require("method-override");
+const ejsmate = require("ejs-mate");
 
 
 // Mongo DB url
@@ -21,9 +23,12 @@ async function main() {
   await mongoose.connect(MONGO_URL);
 };
 
-app.set("views",path.join(__dirname,"views/"));
-app.set("views engine","views");
-app.use(express.urlencoded({extended : true}));
+app.set("views", path.join(__dirname, "views/"));
+app.set("views engine", "views");
+app.use(express.urlencoded({ extended: true }));
+app.use(methodOverride("_method"));
+app.engine('ejs', ejsmate);
+app.use(express.static(path.join(__dirname,"/public")));
 
 
 // Root route design
@@ -31,33 +36,53 @@ app.get("/", (req, res) => {
   res.send("Hi, I am root");
 });
 
-
-
 //  index route  
-app.get("/listings",async (req,res)=>{
+app.get("/listings", async (req, res) => {
   const allListings = await Listing.find({});
-  res.render("listings/index.ejs",{allListings});
+  res.render("listings/index.ejs", { allListings });
 });
 
 // new route
-app.get("/litings/new",(req,res)=>{
+app.get("/listings/new", (req, res) => {
   res.render("listings/new.ejs");
 });
 
 // create route
-app.get("/listing",async (req,res)=>{
-  let listing = req.body;
-  console.log(req.body);
-  // res.send("hellow");
+app.post("/listings", async (req, res) => {
+  let newlistings = new Listing(req.body.Listing);
+  await newlistings.save();
+  res.redirect("/listings");
+});
+
+
+// Edit route
+app.get("/listings/:id/edit", async (req, res) => {
+  let { id } = req.params;
+  const listing = await Listing.findById(id);
+  res.render("listings/edit.ejs", { listing });
+});
+
+// Update route
+app.put("/listings/:id", async (req, res) => {
+  let { id } = req.params;
+  await Listing.findByIdAndUpdate(id, { ...req.body.Listing });
+  res.redirect(`/listings/${id}`);
 });
 
 // show route
-app.get("/listings/:id",async (req,res)=>{
-  let {id} = req.params;
+app.get("/listings/:id", async (req, res) => {
+  let { id } = req.params;
   const listing = await Listing.findById(id);
-  res.render("listings/show.ejs",{listing});
+  res.render("listings/show.ejs", { listing });
 });
 
+//Delete Route
+app.delete("/listings/:id", async (req, res) => {
+  let { id } = req.params;
+  let deletedListings = await Listing.findOneAndDelete(id);
+  console.log(deletedListings);
+  res.redirect("/listings");
+});
 
 // server SET
 app.listen(8080, () => {
