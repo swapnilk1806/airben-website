@@ -1,15 +1,40 @@
 <% layout("/layouts/bollerplate.ejs") %>
-
-<body>
-    <h3>Create new Listings</h3>
-    <form method="post" action="/listings">
-        <input type="text" name="Listing[title]" placeholder="Enter title"><br><br>
-        <textarea type="text" name="Listing[description]" placeholder="Enter description"></textarea><br><br>
-        <input type="text" name="Listing[image]" placeholder="Enter image"><br><br>
-        <input type="number" name="Listing[price]" placeholder="Enter price"><br><br>
-        <input type="text" name="Listing[location]" placeholder="Enter location"><br><br>
-        <input type="text" name="Listing[country]" placeholder="Enter country"><br><br>
-        <button type="submit">Add</button>
-        <button type="reset">Clear </button>
-    </form>
-</body>
+    <div class="row">
+        <div class="col-8 offset-2">
+            <br><br>
+        <h2>Create new Listings</h2>
+        <br>
+        <form method="post" action="/listings" novalidate class="need-validation">
+            <div class="mb-3">
+                <label for="title" class="form-label">Title</label>
+                <input type="text" name="Listing[title]" nonvalidate  placeholder="Enter title" class="form-control is-nonvalid" required>
+            </div>
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea type="text" name="Listing[description]" placeholder="Enter description"
+                    class="form-control"required></textarea>
+            </div>
+            <div class="mb-3">
+                <label for="image" class="form-label">Image Link</label>
+                <input type="text" name="Listing[image]" placeholder="Enter image " class="form-control">
+            </div>
+            <div class="row">
+                <div class="mb-3 col-md-4">
+                    <label for="price" class="form-label">Price</label>
+                    <input type="number" name="Listing[price]" placeholder="Enter price " class="form-control"required>
+                </div>
+                <div class="mb-3 col-md-8">
+                    <label for="country" class="form-label">Country</label>
+                    <input type="text" name="Listing[country]" placeholder="Enter country" class="form-control"required>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="location" class="form-label">location</label>
+                <input type="text" name="Listing[location]" placeholder="Enter location" class="form-control"required>
+            </div>
+            <br>
+            <button type="submit" class="btn btn-grn btn-dark">Add</button>
+        </form>
+        
+    </div>
+    </div>

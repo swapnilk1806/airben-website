@@ -1,14 +1,27 @@
 <% layout("/layouts/bollerplate.ejs") %>
-<body>
-    <h4>All listings</h4>
-    <form method="get" action="/listings/new">
+
+    <body>
+        <h4>All listings</h4>
+        <!-- <form method="get" action="/listings/new">
         <button>Create new listings</button>
-    </form>
-    <ul>
-        <% for(let listing of allListings ){ %>
-            <li>
-               <a href="/listings/<%= listing._id %>"> <%= listing.title  %></a>
-            </li>
-            <% } %>
-    </ul>
-</body>
+    </form> -->
+
+        <div class="row row-cols-lg-4 row-cols-md-3 row-cols-sm-1">
+            <% for(let listing of allListings ){ %>
+                <!-- <a href="/listings/<%= listing._id %>"> -->
+                <a href="/listings/<%= listing._id %>" class="listing-link" id="link">
+                    <div class="card col" style="width: 20rem;">
+                        <img src="<%- listing.image %>  " class="card-img-top" style="height: 20rem;"
+                            alt="Listing image">
+                            <div class="card-img-overlay">abc</div>
+                        <div class="card-body">
+                            <b><%- listing.title %></b>
+                            <p>&#8377 <%-listing.price.toLocaleString("en-IN") %> \ night</p>
+                            <!-- <p class="card-text"><%- listing.description %></p> -->
+                            <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+                        </div>
+                    </div>
+                </a>
+                <% } %>
+        </div>
+    </body>
